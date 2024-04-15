@@ -1,0 +1,83 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Brusscorrea/juego-de-adivinanza/blob/main/juego%20de%20adivinanza\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "def generate_board(rows, cols):\n",
+        "    # Genera una matriz de números aleatorios y letras como tablero\n",
+        "    letters = ['a', 'b', 'c']\n",
+        "    board = [[random.choice([random.randint(1, 10)] + letters) for _ in range(cols)] for _ in range(rows)]\n",
+        "    return board\n",
+        "\n",
+        "def show_board(board):\n",
+        "    # Muestra el tablero al jugador, ocultando el valor secreto con un asterisco\n",
+        "    for row in board:\n",
+        "        print(' '.join(str(x) if isinstance(x, int) else x for x in row))\n",
+        "\n",
+        "def hide_value(board):\n",
+        "    # Oculta un valor secreto en el tablero con un asterisco\n",
+        "    secret_row = random.randint(0, len(board) - 1)\n",
+        "    secret_col = random.randint(0, len(board[0]) - 1)\n",
+        "    secret_value = board[secret_row][secret_col]\n",
+        "    board[secret_row][secret_col] = '*'\n",
+        "    return secret_value, board\n",
+        "\n",
+        "def play_game(rows, cols):\n",
+        "    # Juega el juego de adivinanzas\n",
+        "    board = generate_board(rows, cols)\n",
+        "    secret_value, hidden_board = hide_value(board)\n",
+        "    show_board(hidden_board)\n",
+        "    guess = input(\"Adivina el valor secreto: \")\n",
+        "    if str(guess).lower() == str(secret_value).lower():\n",
+        "        print(\"¡Correcto!\")\n",
+        "    else:\n",
+        "        print(\"Incorrecto, el valor era:\", secret_value)\n",
+        "\n",
+        "def main():\n",
+        "    print(\"Bienvenido al juego \")\n",
+        "    size = input(\"Tamaño del tablero : \")\n",
+        "    rows, cols = map(int, size.split('x'))\n",
+        "    play_game(rows, cols)\n",
+        "    while True:\n",
+        "        play_again = input(\"¿Quieres jugar de nuevo? (s/n): \").lower()\n",
+        "        if play_again != 's':\n",
+        "            break\n",
+        "        play_game(rows, cols)\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    main()"
+      ],
+      "metadata": {
+        "id": "4Iv4nmDuAf3H"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "name": "Te damos la bienvenida a Colaboratory",
+      "toc_visible": true,
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
